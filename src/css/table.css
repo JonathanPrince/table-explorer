@@ -1,0 +1,40 @@
+table {
+    table-layout: fixed;
+}
+th {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+tr {
+    border-bottom: 1px solid #ccc;
+    background: #fff;
+}
+td {
+    height: 3em;
+}
+tr.dark {
+    background: #eee;
+}
+th.col1, td.col1 {
+    width: 300px;
+}
+td.pages {
+    width: 200px;
+}
+th.lastCol, td.lastCol, td.lineTotal {
+    width: 80px;
+}
+td.td-stars {
+    width: 100px;
+}
+td.views, td.lineTotal, td.pages, td.lastCol, td.feedback, td.td-center {
+    text-align: center;
+}
+tr.totals {
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    line-height: 2em;
+}
+td.lineTotal, tr.totals {
+    background: #d3e9ff;
+}
