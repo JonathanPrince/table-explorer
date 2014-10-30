@@ -2,12 +2,15 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    css: {
+      files: 'src/**/*.css'
+    },
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
       },
       dist: {
-        files: {'build/js/<%= pkg.name %>.min.js'}
+        files: 'build/js/<%= pkg.name %>.min.js'
       }
     },
     jshint: {
@@ -22,7 +25,7 @@ module.exports = function(grunt) {
     },
     watch: {
       src: {
-        files: ['<%= jshint.files %>', 'example.html', 'src/**/*.css'],
+        files: ['<%= jshint.files %>', 'example.html', '<%= css.files %>'],
         options: { livereload: true }
       }
     },
