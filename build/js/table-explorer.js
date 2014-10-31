@@ -1,4 +1,36 @@
-var util = {
+var dragger = function(containerID) {
+    var clicked = false;
+
+    var prefix = util.getPrefix();
+
+    var vendorPrefix = '';
+
+    if(prefix.lowercase === 'webkit' || 'moz') {
+        vendorPrefix = '-' + prefix.lowercase + '-';
+    }
+
+    var container = document.getElementById(containerID);
+
+    var updateScrollPos = function(e) {
+        container.scrollTop  = container.scrollTop + (clickY - e.pageY);
+        container.scrollLeft = container.scrollLeft + (clickX - e.pageX);
+    };
+
+    util.addEvent(container,'mousemove', function(e) {
+        if(clicked === true) updateScrollPos(e);
+    });
+    util.addEvent(container,'mousedown', function(e) {
+        clicked = true;
+        container.style.cursor = vendorPrefix + 'grabbing';
+        clickY = e.pageY;
+        clickX = e.pageX;
+    });
+    util.addEvent(container,'mouseup', function() {
+        clicked = false;
+        container.style.cursor = vendorPrefix + 'grab';
+    });
+
+};;var util = {
   addEvent: function ( obj, type, fn ) {
     if ( obj.attachEvent ) {
       obj['e'+type+fn] = fn;
@@ -25,33 +57,24 @@ var util = {
       js: pre[0].toUpperCase() + pre.substr(1)
     };
   }
-};;var clicked = false;
+};;var wrapElement = function(elementToWrap, wrapperID){
+	elementToWrap = '#' + elementToWrap;
+	var parent = document.querySelector(elementToWrap).parentNode;
+	var wrapper = document.createElement('div');
+	var position = 0;
+	
+	for(var i = 0; i < parent.childNodes.length; i++) {
+	  if(parent.childNodes[i] === document.querySelector(elementToWrap)) {
+	    position = i;
+	    break;
+	  }
+	}
 
-var prefix = util.getPrefix();
+	wrapper.id = wrapperID;
+	wrapper.appendChild(document.querySelector(elementToWrap));
+	parent.insertBefore(wrapper, parent.childNodes[position]);
+};
 
-var vendorPrefix = '';
-
-if(prefix.lowercase === 'webkit' || 'moz') {
-	vendorPrefix = '-' + prefix.lowercase + '-';
-}
-
-var holder = document.getElementById('holder');
-
-util.addEvent(holder,'mousemove', function(e) {
-    if(clicked === true) updateScrollPos(e);
-});
-util.addEvent(holder,'mousedown', function(e) {
-    clicked = true;
-    holder.style.cursor = vendorPrefix + 'grabbing';
-    clickY = e.pageY;
-    clickX = e.pageX;
-});
-util.addEvent(holder,'mouseup', function() {
-    clicked = false;
-    holder.style.cursor = vendorPrefix + 'grab';
-});
-
-var updateScrollPos = function(e) {
-    holder.scrollTop  = holder.scrollTop + (clickY - e.pageY);
-    holder.scrollLeft = holder.scrollLeft + (clickX - e.pageX);
-};;console.log('initialising...');
+;console.log('initialising...');
+wrapElement('result-table','holder');
+dragger('holder');
